@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package com.banking.ledger;
+
+option java_multiple_files = true;
+option java_package = "com.banking.ledger.grpc";
+option java_outer_classname = "LedgerProto";
+
+service LedgerService {
+  // Create a new account for a user
+  rpc CreateAccount (CreateAccountRequest) returns (AccountResponse);
+
+  // Get current balance for an account
+  rpc GetBalance (GetBalanceRequest) returns (BalanceResponse);
+
+  // Post a new transaction (transfer, deposit, withdrawal)
+  rpc PostTransaction (PostTransactionRequest) returns (TransactionResponse);
+
+  // Get transaction history for an account
+  rpc GetTransactionHistory (GetHistoryRequest) returns (TransactionHistoryResponse);
+}
+
+message CreateAccountRequest {
+  string user_id = 1;
+  string currency = 2; // USD, EUR, etc.
+}
+
+message AccountResponse {
+  string account_id = 1;
+  string user_id = 2;
+  string currency = 3;
+  string balance = 4; // Represented as string to avoid float precision issues
+}
+
+message GetBalanceRequest {
+  string account_id = 1;
+}
+
+message BalanceResponse {
+  string account_id = 1;
+  string currency = 2;
+  string balance = 3;
+}
+
+message PostTransactionRequest {
+  string from_account_id = 1; // Optional for DEPOSIT
+  string to_account_id = 2;   // Optional for WITHDRAWAL
+  string amount = 3;
+  string currency = 4;
+  string reference_id = 5;    // Unique idempotency key
+  string metadata = 6;        // JSON or text metadata
+  string type = 7;            // TRANSFER, DEPOSIT, WITHDRAWAL
+}
+
+message TransactionResponse {
+  string transaction_id = 1;
+  string status = 2;          // POSTED, FAILED
+  string message = 3;
+}
+
+message GetHistoryRequest {
+  string account_id = 1;
+  int32 page = 2;
+  int32 size = 3;
+}
+
+message TransactionHistoryResponse {
+  repeated TransactionSummary transactions = 1;
+}
+
+message TransactionSummary {
+  string transaction_id = 1;
+  string type = 2;
+  string amount = 3;
+  string direction = 4;       // CREDIT, DEBIT
+  string status = 5;
+  string created_at = 6;
+  string balance_after = 7;
+  string reference_id = 8;
+}
