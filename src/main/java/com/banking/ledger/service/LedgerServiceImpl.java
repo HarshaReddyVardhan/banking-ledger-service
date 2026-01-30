@@ -166,7 +166,7 @@ public class LedgerServiceImpl extends LedgerServiceGrpc.LedgerServiceImplBase {
             Account toAccount = null;
 
             // Load and validate accounts
-            if (request.hasFromAccountId() && !request.getFromAccountId().isEmpty()) {
+            if (!request.getFromAccountId().isEmpty()) {
                 fromAccountId = InputValidator.validateUUID(request.getFromAccountId(), "from_account_id");
                 fromAccount = accountRepository.findById(fromAccountId)
                         .orElseThrow(() -> new AccountNotFoundException("Source account not found"));
@@ -175,7 +175,7 @@ public class LedgerServiceImpl extends LedgerServiceGrpc.LedgerServiceImplBase {
                 }
             }
 
-            if (request.hasToAccountId() && !request.getToAccountId().isEmpty()) {
+            if (!request.getToAccountId().isEmpty()) {
                 toAccountId = InputValidator.validateUUID(request.getToAccountId(), "to_account_id");
                 toAccount = accountRepository.findById(toAccountId)
                         .orElseThrow(() -> new AccountNotFoundException("Destination account not found"));

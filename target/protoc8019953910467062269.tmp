@@ -1,0 +1,6 @@
+--proto_path=D:\Banking_Project\banking-ledger-service\src\main\proto
+--proto_path=D:\Banking_Project\banking-ledger-service\target\protoc-dependencies\5fbcf29ffd7dc636bd836aa07fa373d6
+--proto_path=D:\Banking_Project\banking-ledger-service\target\protoc-dependencies\84b05e4007b03b2cd59a6555743f7f00
+--proto_path=D:\Banking_Project\banking-ledger-service\target\protoc-dependencies\b17c6719977386664f498fe0bb7ad4e3
+--java_out=D:\Banking_Project\banking-ledger-service\target\generated-sources\protobuf\java
+D:\Banking_Project\banking-ledger-service\src\main\proto\ledger.proto
